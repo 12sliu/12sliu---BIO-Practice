@@ -1,0 +1,10 @@
+q3b 15
+q3c 6, 252 * 7 + 452 * 452 + 171 * 171 = 2598
+q3d Yes.
+The largest digit (in terms of characters in the word) has 5 characters.
+A transformation adds or removes 5 character.
+Any digit can be added or removed to a number in a transformation.
+If a digit is entirely removed in a transformation without any other letters touched, the remainder is guaranteed to be a number.
+A digit can be added to a number in a transformation, where the remainder is also guaranteed to be a number.
+This means that a number can have all of its original digits removed and the digits of the new number added one by one.
+So there is at least one number ladder for every integer.

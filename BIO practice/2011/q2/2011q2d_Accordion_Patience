@@ -1,0 +1,6 @@
+Yes, it is always possible to make at least one move.
+When the first pile is moved at the start of the game, that creates a pile of 2 cards, which can be moved onto each other.
+These cards of the first pile will stay touching each other in their pile no matter what actions are taken.
+When the finished game is dealt into a new game, the cards of the first pile will be distributed next to each other.
+It is guaranteed one can be moved onto the other, as they must share a value or suit, due to one of them being moved onto the other in the first match.
+Therefore at least one action can be taken.

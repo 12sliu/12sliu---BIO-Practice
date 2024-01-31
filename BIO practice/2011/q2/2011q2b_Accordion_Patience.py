@@ -1,0 +1,2 @@
+# 2C KC 3H KH 4S KS 2D KD 4C 2H 7H 5S
+

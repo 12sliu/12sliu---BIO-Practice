@@ -1,0 +1,9 @@
+q2b = 384
+q2c = 38
+q2d = there are more upside down numbers with 1001 digits that contain a 5
+Every upside down number with 1001 digits must contain at least one 5.
+The middle digit of this number must be a 5.
+When there is a odd number of digits, then the middle digit will be added to itself.
+This middle digit has to be a 5 because 5 is the only number that equals to 10 when added to itself.
+The upside down numbers with 1000 digits do not require a 5.
+There is a equal amount of upside down numbers with 1000 digits and upside down numbers with 1001 digits.
