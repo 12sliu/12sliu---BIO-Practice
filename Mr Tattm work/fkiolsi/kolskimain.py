@@ -7,6 +7,7 @@
 
 from typing import Tuple
 from copy import copy
+import time
 
 class Block:
     def __init__(self, size: Tuple[int, int], coords: Tuple[int, int], count):
@@ -101,41 +102,43 @@ class Manager:
         self.print(self.grid)
 
     def move_red(self, pos: Tuple[int, int]):
-        statesdict = {tuple([tuple(i) for i in self.grid]): 0}
+        starttime = time.time()
+        # statesdict = {tuple([tuple(i) for i in self.grid]): 0}
         count = 0
+        queues = [[tuple([tuple(i) for i in self.grid])], []]
         howmanystates = 0
-        tempdict = {}
         for i in range(100):
-            for state in statesdict:
-                if statesdict[state] == count:
-                    howmanystates += 1
-                    for i, line in enumerate(state):
-                        for j, point in enumerate(line):
-                            if point is not None:
-                                thingjiggy = [(-1, 0), (1, 0), (0, -1), (0, 1)]
-                                for k in thingjiggy:
-                                    if not(0 <= i+k[0] < 5 and 0 <= j+k[1] < 4):
-                                        continue
-                                    elif state[i+k[0]][j+k[1]] is not None:
-                                        continue
-                                    newnewgrid = copy(list(list(i) for i in state))
-                                    # print(f"\n {point.count}")
-                                    newnewgrid[i+k[0]][j+k[1]] = copy(state[i][j])
-                                    newnewgrid[i][j] = None
-                                    newnewgrid[i + k[0]][j + k[1]].coords = (j + k[1], i + k[0])
-                                    self.print(state)
-                                    if self.test_grid(newnewgrid, (i + k[0], j + k[1])):
-                                        # self.print(newnewgrid)
-                                        # print()
-                                        # print()
-                                        if isinstance(state[i][j], RedBlock):
-                                            if (j + k[1], i + k[0]) == pos:
-                                                return 0
-                                        tempdict[tuple([tuple(i) for i in newnewgrid])] = count + 1
-            statesdict.update(tempdict)
-            print(count)
-            print(howmanystates)
+            for state in queues[count]:
+                howmanystates += 1
+                for i, line in enumerate(state):
+                    for j, point in enumerate(line):
+                        if point is not None:
+                            thingjiggy = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+                            for k in thingjiggy:
+                                if not(0 <= i+k[0] < 5 and 0 <= j+k[1] < 4):
+                                    continue
+                                elif state[i+k[0]][j+k[1]] is not None:
+                                    continue
+                                newnewgrid = copy(list(list(i) for i in state))
+                                # print(f"\n {point.count}")
+                                newnewgrid[i+k[0]][j+k[1]] = copy(state[i][j])
+                                newnewgrid[i][j] = None
+                                newnewgrid[i + k[0]][j + k[1]].coords = (j + k[1], i + k[0])
+                                # self.print(state)
+                                if self.test_grid(newnewgrid, (i + k[0], j + k[1])):
+                                    # self.print(newnewgrid)
+                                    # print()
+                                    if isinstance(state[i][j], RedBlock):
+                                        if (j + k[1], i + k[0]) == pos:
+                                            self.print(newnewgrid)
+                                            return 0
+                                    queues[count+1].append(tuple([tuple(i) for i in newnewgrid]))
+            print(f"on iteration {count+1}")
+            print(f"time is {time.time() - starttime}")
+            print(f"{howmanystates} states processed")
             howmanystates = 0
+            queues.append([])
+            queues[count] = []
             count += 1
 
     def test_grid(self, testgrid, newcoords):
@@ -144,6 +147,8 @@ class Manager:
         movedpiece = testgrid[newcoords[0]][ newcoords[1]]
         for line in testgrid[max(newcoords[0]-1, 0):min(newcoords[0]+movedpiece.size[0] + 1, 5)]:
             for i in line[max(newcoords[1]-1, 0):min(newcoords[1]+movedpiece.size[1] + 1, 4)]:
+        # for line in testgrid[newcoords[0]-1:newcoords[0]+ 1]:
+        #     for i in line[newcoords[1]-1:newcoords[1]+ 1]:
                 if i is not None:
                     for j in range(i.size[1]):
                         for k in range(i.size[0]):
@@ -157,16 +162,16 @@ class Manager:
                     # print(newgrid)
                     count += 1
         # print(testgrid)
-        print(newgrid, newcoords)
-        movedpiece = testgrid[newcoords[0]][ newcoords[1]]
-        print(max(newcoords[0]-1, 0), min(newcoords[0]+movedpiece.size[0], 4))
-        print(max(newcoords[1]-1, 0), min(newcoords[1]+movedpiece.size[1], 3))
-        for line in testgrid[max(newcoords[0]-1, 0):min(newcoords[0]+movedpiece.size[0] + 1, 5)]:
-            for i in line[max(newcoords[1]-1, 0):min(newcoords[1]+movedpiece.size[1] + 1, 4)]:
-                print(i)
-                print("hhhh")
-        self.print(testgrid)
-        print("above should be testgrid")
+        # print(newgrid, newcoords)
+        # movedpiece = testgrid[newcoords[0]][ newcoords[1]]
+        # print(max(newcoords[0]-1, 0), min(newcoords[0]+movedpiece.size[0], 4))
+        # print(max(newcoords[1]-1, 0), min(newcoords[1]+movedpiece.size[1], 3))
+        # for line in testgrid[max(newcoords[0]-1, 0):min(newcoords[0]+movedpiece.size[0] + 1, 5)]:
+        #     for i in line[max(newcoords[1]-1, 0):min(newcoords[1]+movedpiece.size[1] + 1, 4)]:
+        #         print(i)
+        #         print("hhhh")
+        # self.print(testgrid)
+        # print("above should be testgrid")
         return True
 
 
