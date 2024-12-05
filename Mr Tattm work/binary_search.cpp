@@ -40,7 +40,7 @@ using namespace std;
 // }
 
 int main(){
-    vector<int> numbers = {1, 1, 2, 3, 5, 8, 13, 21};
+    vector<int> numbers = {0, 1, 2, 3, 5, 8, 13, 21};
     int target = 1;
 
     int start = 0; 
