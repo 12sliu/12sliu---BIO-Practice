@@ -28,12 +28,12 @@ class Complex:
         #     if i not in plan:
         #         temp.append(i)
         # letters = temp
-        # print(len(letters), len(plan))
+#         # print(len(letters), len(plan))
         # for letter in range(len(plan)):
         count = 0
         chosen = []
         while len(plan) > 0:
-            # print(ord(letter)-65, ord(letters[0])-65)
+#             # print(ord(letter)-65, ord(letters[0])-65)
             letter = plan[0]
             if letters[0+count] in plan:
                 count += 1
@@ -67,17 +67,20 @@ class Complex:
                 sortArray = sorted(sortArray)
                 for i, ordletter in enumerate(sortArray):
                     if self.letter_to_room(self.spylocation).edges[chr(ordletter)] % 2 == 1:
-                        if ordletter == sortArray[-1]:
+                        # print(i, ordletter)
+                        if i == len(sortArray) - 1:
+                            # print(i, ordletter)
                             self.letter_to_room(self.spylocation).edges[self.rooms[ordletter-65].letter] += 1
                             self.spylocation = self.rooms[ordletter-65].letter
+                            # print("BBACC")
                             self.letter_to_room(self.spylocation).amount += 1
                             break
                         else:
-                            # print(type(self.spylocation.edges))
-                            # print(sortArray[i - 1])
-                            # print(self.rooms[sortArray[i-1]-65])
-                            self.letter_to_room(self.spylocation).edges[self.rooms[sortArray[i-1]-65].letter] += 1
-                            self.spylocation = self.rooms[sortArray[i-1]-65].letter
+#                             # print(type(self.spylocation.edges))
+#                             # print(sortArray[i - 1])
+#                             # print(self.rooms[sortArray[i-1]-65])
+                            self.letter_to_room(self.spylocation).edges[self.rooms[sortArray[i+1]-65].letter] += 1
+                            self.spylocation = self.rooms[sortArray[i+1]-65].letter
                             self.letter_to_room(self.spylocation).amount += 1
                             break
 
@@ -92,17 +95,26 @@ n[1], n[2] = int(n[1]), int(n[2])
 test = Complex(n[0])
 
 for room in test.rooms:
-    # print(room.letter, end=" ")
+#     # print(room.letter, end=" ")
+    arr = []
     for i in room.edges.keys():
-        print(test.rooms[ord(i)-65].letter, end="")
+        arr.append(test.rooms[ord(i)-65].letter)
+    arr.sort()
+    for i in arr:
+        print(i, end= "")
     # for j in room.edges.values():
-    #     print(j, end=" ")
+#     #     print(j, end=" ")
     print()
 
+# for i in range(n[1]):
+#     print(test.rooms[ord(test.spylocation)-65].letter, end="")
 test.spy_update(n[1])
 print(test.rooms[ord(test.spylocation)-65].letter, end="")
 test.__init__(n[0])
 test.spy_update(n[2])
 print(test.rooms[ord(test.spylocation)-65].letter)
+
+# ABACABDBACF
+# ABACABEBACG
 
 
